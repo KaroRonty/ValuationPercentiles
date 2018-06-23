@@ -4,6 +4,7 @@ library(dplyr) # data formatting
 library(ggplot2) # plotting
 library(reshape2) # melting data for plotting
 
+# Get CAPE, P/E and P/D data from Shiller
 GET("http://www.econ.yale.edu/~shiller/data/ie_data.xls", write_disk(temp <- tempfile(fileext = ".xls")))
 data <- read_xls(temp, sheet = 3, skip = 7)
 
