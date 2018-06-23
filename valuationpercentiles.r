@@ -1,4 +1,4 @@
-library(httr) # downloading the xls file
+library(httr) # downloading the xls(x) files
 library(readxl) # reading xls(x) files
 library(dplyr) # data formatting
 library(ggplot2) # plotting
