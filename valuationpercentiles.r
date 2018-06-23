@@ -6,11 +6,11 @@ library(reshape2) # melting data for plotting
 
 # Get CAPE, P/E and P/D data from Shiller
 GET("http://www.econ.yale.edu/~shiller/data/ie_data.xls", write_disk(temp <- tempfile(fileext = ".xls")))
-data <- read_xls(temp, sheet = 3, skip = 7)
+shillerdata <- read_xls(temp, sheet = 3, skip = 7)
 
 # Format the years and months correctly
 corrected_dates <- expand.grid(1:12, 1871:2018)
-last_month <- length(grep("2018", data$Date))
+last_month <- length(grep("2018", shillerdata$Date))
 months_to_be_cut_off <- 12 - last_month
 corrected_dates <- head(corrected_dates, nrow(corrected_dates) - months_to_be_cut_off)
 # Add leading zeros
@@ -19,9 +19,9 @@ dates <- as.data.frame(paste(corrected_dates$Var2, corrected_dates$Var1, sep = "
 names(dates) <- "dates"
 
 # Remove possible excess rows & add corrected dates back
-data <- head(data, nrow(dates))
-data <- cbind(dates, data)
-data$Date <- NULL
+shillerdata <- head(shillerdata, nrow(dates))
+shillerdata <- cbind(dates, shillerdata)
+shillerdata$Date <- NULL
 
 # Get P/B data from Goyal
 GET("http://www.hec.unil.ch/agoyal/docs/PredictorData2017.xlsx", write_disk(temp <- tempfile(fileext = ".xls")))
@@ -32,7 +32,7 @@ goyaldata <- select(goyaldata, c("yyyymm", "b/m"))
 goyaldata$yyyymm <- paste(substr(goyaldata$yyyymm, 1, 4), substr(goyaldata$yyyymm, 5, 6), sep = "-")
 names(goyaldata) <- c("dates", "bm")
 
-full_data <- full_join(data, goyaldata, by = "dates")
+full_data <- full_join(shillerdata, goyaldata, by = "dates")
 
 # Replace written NAs with real NAs
 full_data$bm[full_data$bm == "NaN"] <- NA
