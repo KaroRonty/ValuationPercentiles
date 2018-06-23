@@ -48,15 +48,15 @@ full_data <- full_data %>% mutate(
 
 # Make a data frame containing only the new valuation variables
 ranked <- as.data.frame(cbind(full_data$dates,
-                percent_rank(full_data$CAPE),
-                percent_rank(full_data$PE),
-                percent_rank(full_data$PB),
-                percent_rank(full_data$PD)))
+                 percent_rank(full_data$CAPE),
+                 percent_rank(full_data$PE),
+                 percent_rank(full_data$PB),
+                 percent_rank(full_data$PD)))
 colnames(ranked) <- c("dates", "CAPE", "PE", "PB", "PD")
 
 melted <- melt(ranked, id.vars = "dates")
 melted$value <- as.numeric(melted$value)
 melted <- as.data.frame(melted)
 
-ggplot(data = melted,aes(x = as.Date(melted$dates, "%Y-%M"),y = value, color = variable)) +
-  facet_wrap(~variable) +  geom_line(size = 1.1) +  labs(x = "Date", y = "Percentile of valuation")
+ggplot(data = melted, aes(x = as.Date(melted$dates, "%Y-%M"),y = value, color = variable)) +
+  facet_wrap(~variable) + geom_line(size = 1.1) + labs(x = "Date", y = "Percentile of valuation")
