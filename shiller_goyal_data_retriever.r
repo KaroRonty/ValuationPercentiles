@@ -7,8 +7,9 @@ GET("http://www.econ.yale.edu/~shiller/data/ie_data.xls", write_disk(temp <- tem
 shillerdata <- read_xls(temp, sheet = 3, skip = 7)
 
 # Format the years and months correctly
-corrected_dates <- expand.grid(1:12, 1871:2018)
-last_month <- length(grep("2018", shillerdata$Date))
+current_year <- format(Sys.time(), "%Y")
+corrected_dates <- expand.grid(1:12, 1871:current_year)
+last_month <- length(grep(current_year, shillerdata$Date))
 months_to_be_cut_off <- 12 - last_month
 corrected_dates <- head(corrected_dates, nrow(corrected_dates) - months_to_be_cut_off)
 
