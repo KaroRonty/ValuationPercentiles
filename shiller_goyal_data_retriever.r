@@ -51,6 +51,7 @@ for (i in 1:I(nrow(full_data) - 2)) {
   full_data$index[i + 2] <- (full_data$index[i + 1] + full_data$D[i + 1] / 12) * full_data$diff[i + 2]
 }
 # Calculate ten year returns
+full_data$tenyear <- NA
 for (i in 1:I(nrow(full_data) - 1)) {
   full_data$tenyear[i + 1] <- (full_data$index[i + 121] / full_data$index[i + 1])^0.1
 }
