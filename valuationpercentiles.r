@@ -3,7 +3,7 @@ library(ggplot2) # plotting
 library(reshape2) # melting data for plotting
 
 # Retrieve data from Shiller & Goyal
-source("shiller_goyal_data_retriever.r")
+source("https://raw.githubusercontent.com/KaroRonty/ShillerGoyalDataRetriever/master/ShillerGoyalDataRetriever.r")
 
 # Calculate the needed variables
 full_data <- full_data %>% mutate(
